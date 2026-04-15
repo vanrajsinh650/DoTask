@@ -1,3 +1,8 @@
+/* ============================================
+   TASKLY — Smart Task Manager Application
+   Pure Vanilla JavaScript — No frameworks
+   ============================================ */
+
 const API_BASE = '/api';
 let isOnline = false;
 let tasks = [];
@@ -6,6 +11,7 @@ let currentSort = 'createdAt-desc';
 let searchQuery = '';
 let extrasVisible = false;
 
+// --- Motivational Quotes ---
 const QUOTES = [
   { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
   { text: "Do what you can, with what you have, where you are.", author: "Theodore Roosevelt" },
@@ -17,45 +23,74 @@ const QUOTES = [
   { text: "Done is better than perfect.", author: "Sheryl Sandberg" },
   { text: "One task at a time. That's how mountains are moved.", author: "Unknown" },
   { text: "The way to get things done is to stimulate competition.", author: "Andrew Carnegie" },
+  { text: "Success is the sum of small efforts, repeated day in and day out.", author: "Robert Collier" },
+  { text: "You don't have to see the whole staircase, just take the first step.", author: "Martin Luther King Jr." },
 ];
 
+// ========== INITIALIZATION ==========
+
 document.addEventListener('DOMContentLoaded', async () => {
+  setGreeting();
   setDate();
   setRandomQuote();
   setThemeFromStorage();
   setDefaultDueDate();
 
+  // Keyboard shortcuts
   document.getElementById('addInput').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') addTask();
   });
+
   document.getElementById('editTitle').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') saveEdit();
     if (e.key === 'Escape') closeEditModal();
   });
 
+  // Connection check & load
   await checkConnection();
   await loadTasks();
 
+  // Refresh countdown timers every minute
   setInterval(() => render(), 60 * 1000);
 });
+
+// ========== DATE & GREETING ==========
+
+function setGreeting() {
+  const hour = new Date().getHours();
+  let greeting;
+  if (hour < 5) greeting = 'Good Night 🌙';
+  else if (hour < 12) greeting = 'Good Morning ☀️';
+  else if (hour < 17) greeting = 'Good Afternoon 🌤️';
+  else if (hour < 21) greeting = 'Good Evening 🌅';
+  else greeting = 'Good Night 🌙';
+
+  const el = document.getElementById('headerGreeting');
+  if (el) el.textContent = greeting;
+}
 
 function setDate() {
   const now = new Date();
   const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  document.getElementById('headerDate').textContent = now.toLocaleDateString('en-IN', opts);
+  const el = document.getElementById('headerDate');
+  if (el) el.textContent = now.toLocaleDateString('en-IN', opts);
 }
 
 function setRandomQuote() {
   const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-  document.getElementById('quoteText').textContent = `"${q.text}"`;
-  document.getElementById('quoteAuthor').textContent = `— ${q.author}`;
+  const textEl = document.getElementById('quoteText');
+  const authorEl = document.getElementById('quoteAuthor');
+  if (textEl) textEl.textContent = `"${q.text}"`;
+  if (authorEl) authorEl.textContent = `— ${q.author}`;
 }
 
 function setDefaultDueDate() {
   const today = new Date().toISOString().split('T')[0];
-  const dueDateEl = document.getElementById('addDueDate');
-  if (dueDateEl) dueDateEl.value = today;
+  const el = document.getElementById('addDueDate');
+  if (el) el.value = today;
 }
+
+// ========== CONNECTION & API ==========
 
 async function checkConnection() {
   try {
@@ -70,6 +105,8 @@ async function checkConnection() {
 function updateStatusBadge(syncing = false) {
   const dot = document.getElementById('statusDot');
   const text = document.getElementById('statusText');
+  if (!dot || !text) return;
+
   dot.className = 'status-dot';
   if (syncing) {
     dot.classList.add('syncing');
@@ -82,8 +119,10 @@ function updateStatusBadge(syncing = false) {
   }
 }
 
-function saveLocal(tasks) {
-  try { localStorage.setItem('taskly_tasks', JSON.stringify(tasks)); } catch {}
+// ========== LOCAL STORAGE ==========
+
+function saveLocal(data) {
+  try { localStorage.setItem('taskly_tasks', JSON.stringify(data)); } catch {}
 }
 
 function loadLocal() {
@@ -92,6 +131,8 @@ function loadLocal() {
     return data ? JSON.parse(data) : [];
   } catch { return []; }
 }
+
+// ========== API REQUEST HELPER ==========
 
 async function apiRequest(url, options = {}) {
   const res = await fetch(url, {
@@ -105,6 +146,8 @@ async function apiRequest(url, options = {}) {
   }
   return res.json();
 }
+
+// ========== CRUD OPERATIONS ==========
 
 async function loadTasks() {
   updateStatusBadge(true);
@@ -131,8 +174,9 @@ async function addTask() {
   const title = titleInput.value.trim();
   if (!title) {
     titleInput.focus();
-    titleInput.style.borderBottom = '2px solid var(--danger)';
-    setTimeout(() => titleInput.style.borderBottom = '', 1200);
+    // Shake animation
+    titleInput.parentElement.style.animation = 'shake 0.4s ease';
+    setTimeout(() => titleInput.parentElement.style.animation = '', 400);
     return;
   }
 
@@ -168,7 +212,7 @@ async function addTask() {
     } else {
       const localTask = {
         ...payload,
-        id: 'local_' + Date.now(),
+        id: 'local_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
         completed: false,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
@@ -178,7 +222,7 @@ async function addTask() {
     saveLocal(tasks);
     clearAddForm();
     render();
-    showToast('Task added!', 'success');
+    showToast('✓ Task added successfully', 'success');
   } catch (err) {
     showToast(err.message || 'Failed to add task', 'error');
   }
@@ -193,6 +237,10 @@ async function toggleTask(id) {
   task.updatedAt = new Date().toISOString();
   saveLocal(tasks);
   render();
+
+  if (task.completed) {
+    showToast('🎉 Task completed!', 'success');
+  }
 
   if (isOnline && !id.startsWith('local_')) {
     try {
@@ -210,7 +258,7 @@ async function deleteTask(id) {
   const el = document.querySelector(`[data-id="${id}"]`);
   if (el) {
     el.classList.add('removing');
-    await new Promise(r => setTimeout(r, 220));
+    await new Promise(r => setTimeout(r, 300));
   }
 
   tasks = tasks.filter(t => t.id !== id);
@@ -258,7 +306,7 @@ async function saveEdit() {
     saveLocal(tasks);
     render();
     closeEditModal();
-    showToast('Task updated!', 'success');
+    showToast('✓ Task updated', 'success');
 
     if (isOnline && !id.startsWith('local_')) {
       try {
@@ -284,6 +332,8 @@ async function clearCompleted() {
     } catch {}
   }
 }
+
+// ========== FILTERS & SORTING ==========
 
 function setFilter(filter) {
   currentFilter = filter;
@@ -338,6 +388,8 @@ function getFilteredTasks() {
   return filtered;
 }
 
+// ========== COUNTDOWN & DEADLINE ==========
+
 function getCountdown(task) {
   if (!task.dueDate) return null;
 
@@ -362,9 +414,8 @@ function getCountdown(task) {
   const days = Math.floor(absDiffMs / 86400000);
 
   let label;
-  if (days >= 2) {
-    label = `${days} days`;
-  } else if (hours >= 1) {
+  if (days >= 2) label = `${days} days`;
+  else if (hours >= 1) {
     const remMins = minutes % 60;
     label = remMins > 0 ? `${hours}h ${remMins}m` : `${hours}h`;
   } else if (minutes >= 1) {
@@ -373,8 +424,7 @@ function getCountdown(task) {
     label = 'now';
   }
 
-  if (isPast) return `overdue by ${label}`;
-  return `in ${label}`;
+  return isPast ? `overdue by ${label}` : `in ${label}`;
 }
 
 function updateDeadlineBanner() {
@@ -387,7 +437,6 @@ function updateDeadlineBanner() {
 
   const upcomingTasks = tasks.filter(t => {
     if (t.completed || !t.dueDate) return false;
-    const today = now.toISOString().split('T')[0];
     let deadlineStr = t.completionTime && t.completionTime.includes('T')
       ? t.completionTime
       : `${t.dueDate}T23:59:59`;
@@ -410,6 +459,8 @@ function updateDeadlineBanner() {
   }
 }
 
+// ========== RENDER ==========
+
 function render() {
   const filtered = getFilteredTasks();
   const list = document.getElementById('taskList');
@@ -421,35 +472,55 @@ function render() {
   const completed = tasks.filter(t => t.completed).length;
   const high = tasks.filter(t => t.priority === 'high' && !t.completed).length;
 
-  document.getElementById('statTotal').textContent = total;
-  document.getElementById('statActive').textContent = active;
-  document.getElementById('statCompleted').textContent = completed;
-  document.getElementById('statHigh').textContent = high;
+  // Animate stat numbers
+  animateNumber('statTotal', total);
+  animateNumber('statActive', active);
+  animateNumber('statCompleted', completed);
+  animateNumber('statHigh', high);
 
+  // Progress ring
   const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
-  const circumference = 2 * Math.PI * 24;
+  const circumference = 2 * Math.PI * 26;
   const offset = circumference - (pct / 100) * circumference;
   const ring = document.getElementById('progressRing');
-  ring.style.strokeDasharray = circumference;
-  ring.style.strokeDashoffset = offset;
-  document.getElementById('progressPercent').textContent = `${pct}%`;
-
-  if (pct === 100 && total > 0) {
-    document.getElementById('progressLabel').textContent = 'All done! 🎉';
-    document.getElementById('progressSub').textContent = 'Great work today!';
-  } else if (pct >= 50) {
-    document.getElementById('progressLabel').textContent = 'Halfway there!';
-    document.getElementById('progressSub').textContent = `${active} task${active !== 1 ? 's' : ''} remaining`;
-  } else {
-    document.getElementById('progressLabel').textContent = `${pct > 0 ? 'Keep going!' : 'Ready to start?'}`;
-    document.getElementById('progressSub').textContent = `${active} task${active !== 1 ? 's' : ''} to complete`;
+  if (ring) {
+    ring.style.strokeDasharray = circumference;
+    ring.style.strokeDashoffset = offset;
   }
 
-  const clearBtn = document.getElementById('clearCompletedBtn');
-  clearBtn.classList.toggle('visible', completed > 0 && (currentFilter === 'all' || currentFilter === 'completed'));
+  const percentEl = document.getElementById('progressPercent');
+  if (percentEl) percentEl.textContent = `${pct}%`;
 
+  const progressLabel = document.getElementById('progressLabel');
+  const progressSub = document.getElementById('progressSub');
+
+  if (pct === 100 && total > 0) {
+    if (progressLabel) progressLabel.textContent = 'All done! 🎉';
+    if (progressSub) progressSub.textContent = 'Amazing work today!';
+  } else if (pct >= 75) {
+    if (progressLabel) progressLabel.textContent = 'Almost there! 🔥';
+    if (progressSub) progressSub.textContent = `${active} task${active !== 1 ? 's' : ''} remaining`;
+  } else if (pct >= 50) {
+    if (progressLabel) progressLabel.textContent = 'Halfway there!';
+    if (progressSub) progressSub.textContent = `${active} task${active !== 1 ? 's' : ''} remaining`;
+  } else if (pct > 0) {
+    if (progressLabel) progressLabel.textContent = 'Keep going! 💪';
+    if (progressSub) progressSub.textContent = `${active} task${active !== 1 ? 's' : ''} to complete`;
+  } else {
+    if (progressLabel) progressLabel.textContent = total > 0 ? 'Ready to start?' : 'No tasks yet';
+    if (progressSub) progressSub.textContent = total > 0 ? `${active} task${active !== 1 ? 's' : ''} to complete` : 'Add your first task!';
+  }
+
+  // Clear completed button
+  const clearBtn = document.getElementById('clearCompletedBtn');
+  if (clearBtn) {
+    clearBtn.classList.toggle('visible', completed > 0 && (currentFilter === 'all' || currentFilter === 'completed'));
+  }
+
+  // Deadline banner
   updateDeadlineBanner();
 
+  // Empty state
   if (filtered.length === 0) {
     list.innerHTML = '';
     empty.classList.add('visible');
@@ -457,21 +528,22 @@ function render() {
     const emptySub = document.getElementById('emptySub');
 
     if (total === 0) {
-      emptyTitle.textContent = 'No tasks yet';
-      emptySub.textContent = 'Add your first task above!';
+      if (emptyTitle) emptyTitle.textContent = 'No tasks yet';
+      if (emptySub) emptySub.textContent = 'Add your first task above!';
     } else if (searchQuery) {
-      emptyTitle.textContent = 'No results found';
-      emptySub.textContent = `No tasks match "${searchQuery}"`;
+      if (emptyTitle) emptyTitle.textContent = 'No results found';
+      if (emptySub) emptySub.textContent = `No tasks match "${searchQuery}"`;
     } else {
-      emptyTitle.textContent = 'Nothing here';
-      emptySub.textContent = 'Try a different filter.';
+      if (emptyTitle) emptyTitle.textContent = 'Nothing here';
+      if (emptySub) emptySub.textContent = 'Try a different filter.';
     }
     return;
   }
 
   empty.classList.remove('visible');
 
-  list.innerHTML = filtered.map(task => {
+  // Build task cards
+  list.innerHTML = filtered.map((task, i) => {
     const isOverdue = !task.completed && task.dueDate && task.dueDate < today;
     const isToday = task.dueDate === today;
     const countdown = !task.completed ? getCountdown(task) : null;
@@ -504,11 +576,11 @@ function render() {
       countdownBadge = `<span class="countdown-badge ${cls}">${countdown}</span>`;
     }
 
-    const tagBadges = (task.tags || []).map(t => `<span class="tag-badge">#${t}</span>`).join('');
+    const tagBadges = (task.tags || []).map(t => `<span class="tag-badge">#${escapeHtml(t)}</span>`).join('');
 
     return `
-      <div class="task-item ${task.completed ? 'completed' : ''}" data-id="${task.id}" data-priority="${task.priority}">
-        <div class="task-check ${task.completed ? 'checked' : ''}" onclick="toggleTask('${task.id}')" role="checkbox" aria-checked="${task.completed}" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')toggleTask('${task.id}')"></div>
+      <div class="task-item ${task.completed ? 'completed' : ''}" data-id="${task.id}" data-priority="${task.priority}" style="animation-delay: ${i * 0.04}s" role="listitem">
+        <div class="task-check ${task.completed ? 'checked' : ''}" onclick="toggleTask('${task.id}')" role="checkbox" aria-checked="${task.completed}" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTask('${task.id}')}" aria-label="Toggle task completion"></div>
         <div class="task-content">
           <div class="task-title">${escapeHtml(task.title)}</div>
           ${task.description ? `<div class="task-desc">${escapeHtml(task.description)}</div>` : ''}
@@ -537,9 +609,38 @@ function render() {
   }).join('');
 }
 
+// ========== ANIMATED NUMBERS ==========
+
+function animateNumber(elementId, target) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const current = parseInt(el.textContent) || 0;
+  if (current === target) return;
+
+  const diff = target - current;
+  const steps = Math.min(Math.abs(diff), 15);
+  const stepValue = diff / steps;
+  let step = 0;
+
+  function tick() {
+    step++;
+    if (step >= steps) {
+      el.textContent = target;
+      return;
+    }
+    el.textContent = Math.round(current + stepValue * step);
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
+
+// ========== MODAL ==========
+
 function openEditModal(id) {
   const task = tasks.find(t => t.id === id);
   if (!task) return;
+
   document.getElementById('editTaskId').value = id;
   document.getElementById('editTitle').value = task.title;
   document.getElementById('editDesc').value = task.description || '';
@@ -556,7 +657,7 @@ function openEditModal(id) {
   document.getElementById('editTags').value = (task.tags || []).join(', ');
   document.getElementById('editOverlay').classList.add('visible');
   document.body.style.overflow = 'hidden';
-  setTimeout(() => document.getElementById('editTitle').focus(), 100);
+  setTimeout(() => document.getElementById('editTitle').focus(), 150);
 }
 
 function closeEditModal() {
@@ -568,13 +669,14 @@ function handleOverlayClick(e) {
   if (e.target === document.getElementById('editOverlay')) closeEditModal();
 }
 
+// ========== UI HELPERS ==========
+
 function toggleExtras() {
   extrasVisible = !extrasVisible;
   document.getElementById('addExtras').classList.toggle('visible', extrasVisible);
   const toggle = document.getElementById('expandToggle');
-  toggle.innerHTML = extrasVisible
-    ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg> Fewer options`
-    : `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg> More options`;
+  toggle.classList.toggle('expanded', extrasVisible);
+  toggle.querySelector('span').textContent = extrasVisible ? 'Fewer options' : 'More options';
 }
 
 function clearAddForm() {
@@ -586,11 +688,14 @@ function clearAddForm() {
   document.getElementById('addTags').value = '';
 }
 
+// ========== THEME ==========
+
 function toggleTheme() {
   const body = document.body;
   const isDark = body.dataset.theme === 'dark';
   body.dataset.theme = isDark ? 'light' : 'dark';
   localStorage.setItem('taskly_theme', body.dataset.theme);
+
   const icon = document.getElementById('themeIcon');
   icon.innerHTML = isDark
     ? `<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`
@@ -598,24 +703,32 @@ function toggleTheme() {
 }
 
 function setThemeFromStorage() {
-  const saved = localStorage.getItem('taskly_theme') || 'light';
+  const saved = localStorage.getItem('taskly_theme') || 'dark';
   document.body.dataset.theme = saved;
-  if (saved === 'dark') {
-    document.getElementById('themeIcon').innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+  if (saved === 'light') {
+    const icon = document.getElementById('themeIcon');
+    if (icon) {
+      icon.innerHTML = `<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`;
+    }
   }
 }
 
+// ========== TOAST NOTIFICATIONS ==========
+
 function showToast(msg, type = 'default') {
   const container = document.getElementById('toastContainer');
+  if (!container) return;
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.innerHTML = msg;
+  toast.textContent = msg;
   container.appendChild(toast);
   setTimeout(() => {
     toast.classList.add('hiding');
-    setTimeout(() => toast.remove(), 220);
+    setTimeout(() => toast.remove(), 250);
   }, 2800);
 }
+
+// ========== FORMATTERS ==========
 
 function formatDate(dateStr) {
   if (!dateStr) return '';
@@ -638,6 +751,33 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+// ========== KEYBOARD SHORTCUTS ==========
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeEditModal();
+  // Ctrl+K or Cmd+K to focus search
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.focus();
+  }
+  // Ctrl+N or Cmd+N to focus add input
+  if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+    e.preventDefault();
+    const addInput = document.getElementById('addInput');
+    if (addInput) addInput.focus();
+  }
 });
+
+// Add shake animation dynamically
+const shakeStyle = document.createElement('style');
+shakeStyle.textContent = `
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+`;
+document.head.appendChild(shakeStyle);
