@@ -13,6 +13,7 @@ A beautiful, production-ready Smart Task Manager built with **pure HTML, CSS, an
 ## 🎯 What is DoTask?
 
 DoTask is a full-featured task management web app that lets you:
+
 - **Create, edit, and delete tasks** with titles, descriptions, priorities, due dates, times, and tags
 - **Track your progress** with a live dashboard showing stats, completion percentage, and deadline alerts
 - **Work offline** — the app automatically falls back to browser storage when the server is unreachable
@@ -25,58 +26,61 @@ It's built entirely without frontend frameworks — just vanilla HTML/CSS/JS —
 ## ✨ Features
 
 ### Core
-| Feature | Description |
-|---------|-------------|
-| ✅ Full CRUD | Add, edit, delete tasks with smooth animations |
-| ✅ Completion toggle | Animated checkboxes to mark tasks done |
-| ✅ Persistent storage | Node.js backend saves to JSON file on disk |
-| ✅ Offline fallback | LocalStorage keeps your data when the server is down |
-| ✅ Real-time sync | Status badge shows Live / Syncing / Offline |
+
+| Feature               | Description                                          |
+| --------------------- | ---------------------------------------------------- |
+| ✅ Full CRUD          | Add, edit, delete tasks with smooth animations       |
+| ✅ Completion toggle  | Animated checkboxes to mark tasks done               |
+| ✅ Persistent storage | Node.js backend saves to JSON file on disk           |
+| ✅ Offline fallback   | LocalStorage keeps your data when the server is down |
+| ✅ Real-time sync     | Status badge shows Live / Syncing / Offline          |
 
 ### Smart Features
-| Feature | Description |
-|---------|-------------|
-| 🎨 Dark/Light theme | Toggle with one click, preference saved locally |
-| 🔴 Priority levels | High / Medium / Low with color-coded badges and side stripes |
-| 📅 Due dates & times | Set deadlines with real-time countdown (e.g. "in 2h 15m") |
-| 🏷️ Tags | Organize tasks with comma-separated tags |
-| 🔍 Instant search | Search across titles, descriptions, and tags |
-| 📊 Filters | All · Active · Completed · High · Medium · Low · Today · Overdue |
-| 📈 Progress ring | Animated SVG ring showing completion percentage |
-| 📉 Stats dashboard | Live cards for Total, Active, Done, and Urgent counts |
-| ⏰ Deadline alerts | Banner notification for tasks due within 24 hours |
-| 🔤 Sorting | By date, priority, or alphabetically |
-| 💬 Quotes | Random motivational quote on each page load |
-| ⌨️ Keyboard shortcuts | `Ctrl+N` new task, `Ctrl+K` search, `Esc` close modal |
+
+| Feature                 | Description                                                             |
+| ----------------------- | ----------------------------------------------------------------------- |
+| 🎨 Dark/Light theme     | Toggle with one click, preference saved locally                         |
+| 🔴 Priority levels      | High / Medium / Low with color-coded badges and side stripes            |
+| 📅 Due dates & times    | Set deadlines with real-time countdown (e.g. "in 2h 15m")               |
+| 🏷️ Tags               | Organize tasks with comma-separated tags                                |
+| 🔍 Instant search       | Search across titles, descriptions, and tags                            |
+| 📊 Filters              | All · Active · Completed · High · Medium · Low · Today · Overdue |
+| 📈 Progress ring        | Animated SVG ring showing completion percentage                         |
+| 📉 Stats dashboard      | Live cards for Total, Active, Done, and Urgent counts                   |
+| ⏰ Deadline alerts      | Banner notification for tasks due within 24 hours                       |
+| 🔤 Sorting              | By date, priority, or alphabetically                                    |
+| 💬 Quotes               | Random motivational quote on each page load                             |
+| ⌨️ Keyboard shortcuts | `Ctrl+N` new task, `Ctrl+K` search, `Esc` close modal             |
 
 ### Responsive Design
+
 Works on **every device and screen size**:
 
-| Breakpoint | Behaviour |
-|------------|-----------|
-| **≥ 960px** | Two-column layout (sidebar + main content) |
-| **768–960px** | Single column, sidebar stacks above content |
-| **480–768px** | Compact spacing, 2×2 stat grid |
-| **≤ 480px** | Mobile-optimized, always-visible action buttons |
-| **≤ 360px** | Extra-compact for small phones |
-| **≥ 1600px** | Wider layout optimized for large/4K monitors |
-| **Landscape** | Reduced padding for short viewports |
-| **Touch devices** | Larger tap targets, no hover-dependent UI |
-| **Print** | Clean printable version, hides interactive elements |
+| Breakpoint               | Behaviour                                                 |
+| ------------------------ | --------------------------------------------------------- |
+| **≥ 960px**       | Two-column layout (sidebar + main content)                |
+| **768–960px**     | Single column, sidebar stacks above content               |
+| **480–768px**     | Compact spacing, 2×2 stat grid                           |
+| **≤ 480px**       | Mobile-optimized, always-visible action buttons           |
+| **≤ 360px**       | Extra-compact for small phones                            |
+| **≥ 1600px**      | Wider layout optimized for large/4K monitors              |
+| **Landscape**      | Reduced padding for short viewports                       |
+| **Touch devices**  | Larger tap targets, no hover-dependent UI                 |
+| **Print**          | Clean printable version, hides interactive elements       |
 | **Reduced motion** | Respects `prefers-reduced-motion` accessibility setting |
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **Frontend** | HTML5, CSS3, Vanilla JS | UI, logic, no frameworks |
-| **Backend** | Node.js + Express.js | REST API server |
-| **Storage** | JSON file (server-side) | Persistent task data |
-| **Fallback** | LocalStorage (client-side) | Offline data persistence |
-| **Fonts** | [Inter](https://fonts.google.com/specimen/Inter) via Google Fonts | Modern typography |
-| **IDs** | [uuid](https://www.npmjs.com/package/uuid) | Unique task identifiers |
+| Layer              | Technology                                                     | Purpose                  |
+| ------------------ | -------------------------------------------------------------- | ------------------------ |
+| **Frontend** | HTML5, CSS3, Vanilla JS                                        | UI, logic, no frameworks |
+| **Backend**  | Node.js + Express.js                                           | REST API server          |
+| **Storage**  | JSON file (server-side)                                        | Persistent task data     |
+| **Fallback** | LocalStorage (client-side)                                     | Offline data persistence |
+| **Fonts**    | [Inter](https://fonts.google.com/specimen/Inter) via Google Fonts | Modern typography        |
+| **IDs**      | [uuid](https://www.npmjs.com/package/uuid)                        | Unique task identifiers  |
 
 > **No React, Vue, Angular, Tailwind, or any frontend framework.** Everything is hand-written.
 
@@ -172,33 +176,33 @@ All endpoints return JSON with `{ success: boolean, data: ..., message: ... }`.
 
 ### Tasks
 
-| Method | Endpoint | Description | Body |
-|--------|----------|-------------|------|
-| `GET` | `/api/tasks` | List all tasks | — |
-| `GET` | `/api/tasks/:id` | Get one task | — |
-| `POST` | `/api/tasks` | Create a task | `{ title, description?, priority?, dueDate?, completionTime?, tags? }` |
-| `PUT` | `/api/tasks/:id` | Update a task | Same fields as POST |
-| `PATCH` | `/api/tasks/:id/toggle` | Toggle completion | — |
-| `DELETE` | `/api/tasks/:id` | Delete a task | — |
-| `DELETE` | `/api/tasks/completed/clear` | Delete all completed | — |
+| Method     | Endpoint                       | Description          | Body                                                                     |
+| ---------- | ------------------------------ | -------------------- | ------------------------------------------------------------------------ |
+| `GET`    | `/api/tasks`                 | List all tasks       | —                                                                       |
+| `GET`    | `/api/tasks/:id`             | Get one task         | —                                                                       |
+| `POST`   | `/api/tasks`                 | Create a task        | `{ title, description?, priority?, dueDate?, completionTime?, tags? }` |
+| `PUT`    | `/api/tasks/:id`             | Update a task        | Same fields as POST                                                      |
+| `PATCH`  | `/api/tasks/:id/toggle`      | Toggle completion    | —                                                                       |
+| `DELETE` | `/api/tasks/:id`             | Delete a task        | —                                                                       |
+| `DELETE` | `/api/tasks/completed/clear` | Delete all completed | —                                                                       |
 
 ### Query Parameters for `GET /api/tasks`
 
-| Param | Values | Example |
-|-------|--------|---------|
-| `status` | `active`, `completed` | `?status=active` |
-| `priority` | `low`, `medium`, `high` | `?priority=high` |
-| `tag` | any string | `?tag=work` |
-| `search` | any string | `?search=meeting` |
-| `sortBy` | `createdAt`, `priority`, `dueDate`, `title` | `?sortBy=priority` |
-| `sortOrder` | `asc`, `desc` | `?sortOrder=asc` |
+| Param         | Values                                              | Example              |
+| ------------- | --------------------------------------------------- | -------------------- |
+| `status`    | `active`, `completed`                           | `?status=active`   |
+| `priority`  | `low`, `medium`, `high`                       | `?priority=high`   |
+| `tag`       | any string                                          | `?tag=work`        |
+| `search`    | any string                                          | `?search=meeting`  |
+| `sortBy`    | `createdAt`, `priority`, `dueDate`, `title` | `?sortBy=priority` |
+| `sortOrder` | `asc`, `desc`                                   | `?sortOrder=asc`   |
 
 ### Other
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/api/stats` | Task statistics (total, active, completed, overdue, etc.) |
-| `GET` | `/api/health` | Server health check |
+| Method  | Endpoint        | Description                                               |
+| ------- | --------------- | --------------------------------------------------------- |
+| `GET` | `/api/stats`  | Task statistics (total, active, completed, overdue, etc.) |
+| `GET` | `/api/health` | Server health check                                       |
 
 ### Example: Create a Task
 
@@ -219,13 +223,13 @@ curl -X POST http://localhost:3000/api/tasks \
 
 ## ⌨️ Keyboard Shortcuts
 
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl + N` | Focus the "Add task" input |
-| `Ctrl + K` | Focus the search bar |
-| `Escape` | Close the edit modal |
-| `Enter` | Submit task (when add input is focused) |
-| `Enter` | Save changes (when edit title is focused) |
+| Shortcut     | Action                                    |
+| ------------ | ----------------------------------------- |
+| `Ctrl + N` | Focus the "Add task" input                |
+| `Ctrl + K` | Focus the search bar                      |
+| `Escape`   | Close the edit modal                      |
+| `Enter`    | Submit task (when add input is focused)   |
+| `Enter`    | Save changes (when edit title is focused) |
 
 ---
 
@@ -269,13 +273,5 @@ Contributions are welcome! Here's how:
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
----
-
-## 📝 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
 
 **Built with ❤️ by [Vanrajsinh](https://github.com/vanrajsinh650)**
