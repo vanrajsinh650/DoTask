@@ -1,0 +1,6 @@
+# Node modules
+node_modules/
+
+# Local data (tera case)
+data/
+data/*.json
