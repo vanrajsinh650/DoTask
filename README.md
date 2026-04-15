@@ -1,4 +1,4 @@
-# Taskly — Smart Task Manager
+# DoTask — Smart Task Manager
 
 A beautiful, professional Smart Task Manager (To-Do Web Application) built with **pure HTML, CSS, and JavaScript** — no frameworks or libraries. Features a stunning glassmorphism UI with dark/light theme, fully responsive design that works flawlessly on every device from 320px phones to 4K monitors.
 
@@ -65,7 +65,7 @@ A beautiful, professional Smart Task Manager (To-Do Web Application) built with 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/DoTask.git
+   git clone https://github.com/vanrajsinh650/DoTask.git
    cd DoTask
    ```
 

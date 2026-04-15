@@ -1,7 +1,7 @@
 {
-  "name": "smart-task-manager",
+  "name": "dotask",
   "version": "1.0.0",
-  "description": "A smart task manager with Node.js backend and beautiful UI",
+  "description": "DoTask — A smart task manager with Node.js backend and beautiful UI",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

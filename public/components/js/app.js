@@ -1,5 +1,5 @@
 /* ============================================
-   TASKLY — Smart Task Manager Application
+   DoTask — Smart Task Manager Application
    Pure Vanilla JavaScript — No frameworks
    ============================================ */
 
@@ -122,12 +122,12 @@ function updateStatusBadge(syncing = false) {
 // ========== LOCAL STORAGE ==========
 
 function saveLocal(data) {
-  try { localStorage.setItem('taskly_tasks', JSON.stringify(data)); } catch {}
+  try { localStorage.setItem('dotask_tasks', JSON.stringify(data)); } catch {}
 }
 
 function loadLocal() {
   try {
-    const data = localStorage.getItem('taskly_tasks');
+    const data = localStorage.getItem('dotask_tasks');
     return data ? JSON.parse(data) : [];
   } catch { return []; }
 }
@@ -694,7 +694,7 @@ function toggleTheme() {
   const body = document.body;
   const isDark = body.dataset.theme === 'dark';
   body.dataset.theme = isDark ? 'light' : 'dark';
-  localStorage.setItem('taskly_theme', body.dataset.theme);
+  localStorage.setItem('dotask_theme', body.dataset.theme);
 
   const icon = document.getElementById('themeIcon');
   icon.innerHTML = isDark
@@ -703,7 +703,7 @@ function toggleTheme() {
 }
 
 function setThemeFromStorage() {
-  const saved = localStorage.getItem('taskly_theme') || 'dark';
+  const saved = localStorage.getItem('dotask_theme') || 'dark';
   document.body.dataset.theme = saved;
   if (saved === 'light') {
     const icon = document.getElementById('themeIcon');
