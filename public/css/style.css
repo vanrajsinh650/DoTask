@@ -733,6 +733,15 @@ kbd {
 
 .field-input::placeholder { color: var(--text-placeholder); }
 
+/* --- Select dropdown options fix (dark mode) --- */
+.field-select option,
+.sort-select option,
+.modal-select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 8px 12px;
+}
+
 /* ===== SEARCH ===== */
 .search-row {
   position: relative;
@@ -1232,6 +1241,11 @@ kbd {
   border-color: var(--glass-border-focus);
   background: var(--bg-input-focus);
   box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+.modal-select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .modal-row {
