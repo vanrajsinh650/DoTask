@@ -200,9 +200,91 @@ body {
 /* --- App Container --- */
 .app {
   width: 100%;
-  max-width: 680px;
+  max-width: 1200px;
   position: relative;
   z-index: 1;
+}
+
+/* ===== TWO-COLUMN LAYOUT ===== */
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.main-content {
+  min-width: 0;
+}
+
+/* --- Keyboard Shortcuts Card --- */
+.shortcuts-card {
+  background: var(--bg-card);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  margin-top: 20px;
+  transition: all var(--transition);
+}
+
+.shortcuts-card:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.shortcuts-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.shortcut-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.shortcut-row:last-child {
+  margin-bottom: 0;
+}
+
+.shortcut-row span {
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 22px;
+  padding: 0 6px;
+  background: var(--bg-input);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  line-height: 1;
 }
 
 /* ===== HEADER ===== */
@@ -1351,6 +1433,28 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 /* ==========================================
+   RESPONSIVE: Collapse to single column
+   ========================================== */
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .app {
+    max-width: 680px;
+  }
+
+  .shortcuts-card {
+    display: none;
+  }
+}
+
+/* ==========================================
    RESPONSIVE: Tablets & Small Laptops
    ========================================== */
 @media (max-width: 768px) {
@@ -1447,7 +1551,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
    ========================================== */
 @media (min-width: 1600px) {
   body { padding: 60px 20px 120px; }
-  .app { max-width: 720px; }
+  .app { max-width: 1300px; }
+  .layout { grid-template-columns: 320px 1fr; gap: 36px; }
   .header-title { font-size: 42px; }
 }
 

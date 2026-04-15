@@ -24,7 +24,7 @@
 
   <div class="app" id="app">
 
-    <!-- ===== HEADER ===== -->
+    <!-- ===== HEADER (spans full width) ===== -->
     <header class="header" id="appHeader">
       <div class="header-left">
         <div class="brand">
@@ -59,184 +59,196 @@
       </div>
     </header>
 
-    <!-- ===== STATS CARDS ===== -->
-    <section class="stats-bar" aria-label="Task statistics">
-      <div class="stat-card" id="statCardTotal">
-        <div class="stat-icon total-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        </div>
-        <div class="stat-number" id="statTotal">0</div>
-        <div class="stat-label">Total</div>
-      </div>
-      <div class="stat-card" id="statCardActive">
-        <div class="stat-icon active-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div class="stat-number" id="statActive">0</div>
-        <div class="stat-label">Active</div>
-      </div>
-      <div class="stat-card" id="statCardDone">
-        <div class="stat-icon done-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
-        <div class="stat-number" id="statCompleted">0</div>
-        <div class="stat-label">Done</div>
-      </div>
-      <div class="stat-card" id="statCardUrgent">
-        <div class="stat-icon urgent-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        </div>
-        <div class="stat-number" id="statHigh">0</div>
-        <div class="stat-label">Urgent</div>
-      </div>
-    </section>
+    <!-- ===== TWO-COLUMN LAYOUT ===== -->
+    <div class="layout">
 
-    <!-- ===== PROGRESS ===== -->
-    <section class="progress-section" id="progressSection" aria-label="Task progress">
-      <div class="progress-ring-container">
-        <svg class="progress-ring" width="60" height="60" viewBox="0 0 60 60">
-          <circle class="progress-ring-bg" cx="30" cy="30" r="26"/>
-          <circle class="progress-ring-fill" id="progressRing" cx="30" cy="30" r="26"/>
-        </svg>
-        <div class="progress-percent" id="progressPercent">0%</div>
-      </div>
-      <div class="progress-text">
-        <div class="progress-label" id="progressLabel">Ready to start?</div>
-        <div class="progress-sub" id="progressSub">Add your first task!</div>
-      </div>
-    </section>
+      <!-- LEFT: Sidebar (stats, progress, shortcuts, quote) -->
+      <aside class="sidebar" id="sidebar">
 
-    <!-- ===== ADD TASK ===== -->
-    <section class="add-card" id="addCard" aria-label="Add new task">
-      <div class="add-row-main">
-        <div class="add-input-wrap">
-          <svg class="add-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <section class="stats-bar" aria-label="Task statistics">
+          <div class="stat-card" id="statCardTotal">
+            <div class="stat-icon total-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="stat-number" id="statTotal">0</div>
+            <div class="stat-label">Total</div>
+          </div>
+          <div class="stat-card" id="statCardActive">
+            <div class="stat-icon active-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-number" id="statActive">0</div>
+            <div class="stat-label">Active</div>
+          </div>
+          <div class="stat-card" id="statCardDone">
+            <div class="stat-icon done-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="stat-number" id="statCompleted">0</div>
+            <div class="stat-label">Done</div>
+          </div>
+          <div class="stat-card" id="statCardUrgent">
+            <div class="stat-icon urgent-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div class="stat-number" id="statHigh">0</div>
+            <div class="stat-label">Urgent</div>
+          </div>
+        </section>
+
+        <section class="progress-section" id="progressSection" aria-label="Task progress">
+          <div class="progress-ring-container">
+            <svg class="progress-ring" width="60" height="60" viewBox="0 0 60 60">
+              <circle class="progress-ring-bg" cx="30" cy="30" r="26"/>
+              <circle class="progress-ring-fill" id="progressRing" cx="30" cy="30" r="26"/>
+            </svg>
+            <div class="progress-percent" id="progressPercent">0%</div>
+          </div>
+          <div class="progress-text">
+            <div class="progress-label" id="progressLabel">Ready to start?</div>
+            <div class="progress-sub" id="progressSub">Add your first task!</div>
+          </div>
+        </section>
+
+        <!-- Keyboard shortcuts hint (desktop only) -->
+        <div class="shortcuts-card">
+          <div class="shortcuts-title">Keyboard Shortcuts</div>
+          <div class="shortcut-row"><kbd>Ctrl</kbd> + <kbd>N</kbd> <span>New task</span></div>
+          <div class="shortcut-row"><kbd>Ctrl</kbd> + <kbd>K</kbd> <span>Search</span></div>
+          <div class="shortcut-row"><kbd>Esc</kbd> <span>Close modal</span></div>
+        </div>
+
+        <footer class="quote-footer" id="quoteFooter">
+          <p class="quote-text" id="quoteText"></p>
+          <p class="quote-author" id="quoteAuthor"></p>
+        </footer>
+
+      </aside>
+
+      <!-- RIGHT: Main content (add, search, filters, tasks) -->
+      <div class="main-content" id="mainContent">
+
+        <section class="add-card" id="addCard" aria-label="Add new task">
+          <div class="add-row-main">
+            <div class="add-input-wrap">
+              <svg class="add-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <input
+                type="text"
+                class="add-input"
+                id="addInput"
+                placeholder="What needs to be done?"
+                autocomplete="off"
+                maxlength="200"
+              />
+            </div>
+            <button class="add-btn" id="addBtn" onclick="addTask()" aria-label="Add task">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </button>
+          </div>
+          <div class="add-row-sub">
+            <button class="expand-toggle" onclick="toggleExtras()" id="expandToggle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+              <span>More options</span>
+            </button>
+          </div>
+          <div class="add-extras" id="addExtras">
+            <div class="field-group field-desc">
+              <label class="field-label" for="addDesc">Description</label>
+              <input type="text" class="field-input" id="addDesc" placeholder="Add a brief description..." />
+            </div>
+            <div class="field-group field-priority">
+              <label class="field-label" for="addPriority">Priority</label>
+              <select class="field-select" id="addPriority">
+                <option value="medium">⚡ Medium</option>
+                <option value="high">🔴 High</option>
+                <option value="low">🔵 Low</option>
+              </select>
+            </div>
+            <div class="field-group field-date">
+              <label class="field-label" for="addDueDate">Due Date</label>
+              <input type="date" class="field-input" id="addDueDate" />
+            </div>
+            <div class="field-group field-time">
+              <label class="field-label" for="addDueTime">Due Time</label>
+              <input type="time" class="field-input" id="addDueTime" />
+            </div>
+            <div class="field-group field-tags">
+              <label class="field-label" for="addTags">Tags</label>
+              <input type="text" class="field-input" id="addTags" placeholder="work, personal..." />
+            </div>
+          </div>
+        </section>
+
+        <div class="search-row" id="searchRow">
+          <span class="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </span>
           <input
-            type="text"
-            class="add-input"
-            id="addInput"
-            placeholder="What needs to be done?"
+            type="search"
+            class="search-input"
+            id="searchInput"
+            placeholder="Search tasks..."
+            oninput="handleSearch()"
             autocomplete="off"
-            maxlength="200"
           />
         </div>
-        <button class="add-btn" id="addBtn" onclick="addTask()" aria-label="Add task">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </button>
-      </div>
-      <div class="add-row-sub">
-        <button class="expand-toggle" onclick="toggleExtras()" id="expandToggle">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <polyline points="6 9 12 15 18 9"/>
-          </svg>
-          <span>More options</span>
-        </button>
-      </div>
-      <div class="add-extras" id="addExtras">
-        <div class="field-group field-desc">
-          <label class="field-label" for="addDesc">Description</label>
-          <input type="text" class="field-input" id="addDesc" placeholder="Add a brief description..." />
-        </div>
-        <div class="field-group field-priority">
-          <label class="field-label" for="addPriority">Priority</label>
-          <select class="field-select" id="addPriority">
-            <option value="medium">⚡ Medium</option>
-            <option value="high">🔴 High</option>
-            <option value="low">🔵 Low</option>
+
+        <nav class="filter-bar" id="filterBar" aria-label="Task filters">
+          <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
+          <button class="filter-btn" data-filter="active" onclick="setFilter('active')">Active</button>
+          <button class="filter-btn" data-filter="completed" onclick="setFilter('completed')">Completed</button>
+          <div class="filter-divider" aria-hidden="true"></div>
+          <button class="filter-btn" data-filter="high" onclick="setFilter('high')">🔴 High</button>
+          <button class="filter-btn" data-filter="medium" onclick="setFilter('medium')">⚡ Medium</button>
+          <button class="filter-btn" data-filter="low" onclick="setFilter('low')">🔵 Low</button>
+          <div class="filter-divider" aria-hidden="true"></div>
+          <button class="filter-btn" data-filter="today" onclick="setFilter('today')">📅 Today</button>
+          <button class="filter-btn" data-filter="overdue" onclick="setFilter('overdue')">⚠️ Overdue</button>
+        </nav>
+
+        <div class="tools-row" id="toolsRow">
+          <select class="sort-select" id="sortSelect" onchange="handleSort()" aria-label="Sort tasks">
+            <option value="createdAt-desc">Latest first</option>
+            <option value="createdAt-asc">Oldest first</option>
+            <option value="priority-desc">Priority (High → Low)</option>
+            <option value="dueDate-asc">Due date</option>
+            <option value="title-asc">A → Z</option>
           </select>
+          <button class="clear-completed-btn" id="clearCompletedBtn" onclick="clearCompleted()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+            Clear completed
+          </button>
         </div>
-        <div class="field-group field-date">
-          <label class="field-label" for="addDueDate">Due Date</label>
-          <input type="date" class="field-input" id="addDueDate" />
+
+        <div class="deadline-banner" id="deadlineBanner" style="display:none" role="alert">
+          <span class="deadline-banner-icon" aria-hidden="true">⏰</span>
+          <span id="deadlineBannerText"></span>
         </div>
-        <div class="field-group field-time">
-          <label class="field-label" for="addDueTime">Due Time</label>
-          <input type="time" class="field-input" id="addDueTime" />
+
+        <main class="task-list" id="taskList" role="list" aria-label="Task list"></main>
+
+        <div class="empty-state" id="emptyState" aria-live="polite">
+          <div class="empty-illustration" aria-hidden="true">
+            <svg viewBox="0 0 120 120" fill="none">
+              <circle cx="60" cy="60" r="50" stroke="currentColor" stroke-width="1.5" opacity="0.15"/>
+              <circle cx="60" cy="60" r="35" stroke="currentColor" stroke-width="1.5" opacity="0.1"/>
+              <path d="M45 55 L55 65 L75 45" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"/>
+            </svg>
+          </div>
+          <p class="empty-title" id="emptyTitle">No tasks yet</p>
+          <p class="empty-sub" id="emptySub">Add your first task above!</p>
         </div>
-        <div class="field-group field-tags">
-          <label class="field-label" for="addTags">Tags</label>
-          <input type="text" class="field-input" id="addTags" placeholder="work, personal..." />
-        </div>
+
       </div>
-    </section>
-
-    <!-- ===== SEARCH ===== -->
-    <div class="search-row" id="searchRow">
-      <span class="search-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-      </span>
-      <input
-        type="search"
-        class="search-input"
-        id="searchInput"
-        placeholder="Search tasks..."
-        oninput="handleSearch()"
-        autocomplete="off"
-      />
     </div>
-
-    <!-- ===== FILTERS ===== -->
-    <nav class="filter-bar" id="filterBar" aria-label="Task filters">
-      <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
-      <button class="filter-btn" data-filter="active" onclick="setFilter('active')">Active</button>
-      <button class="filter-btn" data-filter="completed" onclick="setFilter('completed')">Completed</button>
-      <div class="filter-divider" aria-hidden="true"></div>
-      <button class="filter-btn" data-filter="high" onclick="setFilter('high')">🔴 High</button>
-      <button class="filter-btn" data-filter="medium" onclick="setFilter('medium')">⚡ Medium</button>
-      <button class="filter-btn" data-filter="low" onclick="setFilter('low')">🔵 Low</button>
-      <div class="filter-divider" aria-hidden="true"></div>
-      <button class="filter-btn" data-filter="today" onclick="setFilter('today')">📅 Today</button>
-      <button class="filter-btn" data-filter="overdue" onclick="setFilter('overdue')">⚠️ Overdue</button>
-    </nav>
-
-    <!-- ===== TOOLS ROW ===== -->
-    <div class="tools-row" id="toolsRow">
-      <select class="sort-select" id="sortSelect" onchange="handleSort()" aria-label="Sort tasks">
-        <option value="createdAt-desc">Latest first</option>
-        <option value="createdAt-asc">Oldest first</option>
-        <option value="priority-desc">Priority (High → Low)</option>
-        <option value="dueDate-asc">Due date</option>
-        <option value="title-asc">A → Z</option>
-      </select>
-      <button class="clear-completed-btn" id="clearCompletedBtn" onclick="clearCompleted()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
-        Clear completed
-      </button>
-    </div>
-
-    <!-- ===== DEADLINE BANNER ===== -->
-    <div class="deadline-banner" id="deadlineBanner" style="display:none" role="alert">
-      <span class="deadline-banner-icon" aria-hidden="true">⏰</span>
-      <span id="deadlineBannerText"></span>
-    </div>
-
-    <!-- ===== TASK LIST ===== -->
-    <main class="task-list" id="taskList" role="list" aria-label="Task list"></main>
-
-    <!-- ===== EMPTY STATE ===== -->
-    <div class="empty-state" id="emptyState" aria-live="polite">
-      <div class="empty-illustration" aria-hidden="true">
-        <svg viewBox="0 0 120 120" fill="none">
-          <circle cx="60" cy="60" r="50" stroke="currentColor" stroke-width="1.5" opacity="0.15"/>
-          <circle cx="60" cy="60" r="35" stroke="currentColor" stroke-width="1.5" opacity="0.1"/>
-          <path d="M45 55 L55 65 L75 45" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"/>
-        </svg>
-      </div>
-      <p class="empty-title" id="emptyTitle">No tasks yet</p>
-      <p class="empty-sub" id="emptySub">Add your first task above!</p>
-    </div>
-
-    <!-- ===== QUOTE ===== -->
-    <footer class="quote-footer" id="quoteFooter">
-      <p class="quote-text" id="quoteText"></p>
-      <p class="quote-author" id="quoteAuthor"></p>
-    </footer>
 
   </div>
 
